@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "./Firebase";
 
 const Form = () => {
@@ -9,16 +16,12 @@ const Form = () => {
     event.preventDefault();
     // alert(`the email you entered was: ${email}`);
 
-    const docRef = doc(db, "users");
+    const docRef = collection(doc(db, "users", email), "logins");
+    const update = await addDoc(docRef, {
+      time: serverTimestamp(),
+    });
 
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-    } else {
-      // doc.data() will be undefined in this case
-      console.log("No such document!");
-    }
+    console.log(update);
   };
   return (
     <form onSubmit={handleSubmit}>
