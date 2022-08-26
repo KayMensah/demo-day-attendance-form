@@ -46,7 +46,7 @@ const Form = () => {
                 }
             );
 
-            // navigate("/success", { replace: true });
+            navigate("/success", { replace: true });
         } catch (error) {
             console.log(error);
             alert(error);
