@@ -3,10 +3,11 @@ import {
     addDoc,
     collection,
     doc,
-    DocumentSnapshot,
     getDoc,
+    getDocs,
+    query,
     serverTimestamp,
-    setDoc,
+    where,
 } from "firebase/firestore";
 import { db } from "./Firebase";
 import { Circle } from "better-react-spinkit";
@@ -15,39 +16,54 @@ import moment from "moment";
 
 const Form = () => {
     let day = moment().format("dddd");
-    const month = moment().format("MMMM");
     let navigate = useNavigate();
     const [id, setId] = useState("");
     const [time, settime] = useState("login");
     const [loading, setLoading] = useState(false);
     const handleSubmit = async (event) => {
+        let day = moment().format("MMMM D, YYYY");
+
         event.preventDefault();
+        let user = [];
         if (!id) return alert("input employee id");
         setLoading(true);
         const ref = collection(db, "logins");
-        // const docref = doc(db, "users", id, "logins", month);
+        const q = query(
+            ref,
+            where("fullDate", "==", day),
+            where("user", "==", doc(db, "users", id)),
+            where("type", "==", time)
+        );
+        const isAlready = await getDocs(q);
         const docSnap = await getDoc(doc(db, "users", id));
-
+        isAlready.forEach((doc) => {
+            user.push(doc.data());
+        });
+        console.log(user);
         if (!docSnap.exists()) {
             setLoading(false);
             return alert("no such user");
         }
+        if (user.length !== 0) {
+            alert("already exist!!");
+            setLoading(false);
+
+            return;
+        }
         try {
-            await addDoc(
-                ref,
-
-                {
-                    type: time,
-                    user: doc(db, "users", id),
-                    time: serverTimestamp(),
-                    day: day,
-                    month: moment().format("MMM"),
-                    year: moment().format("YYYY"),
-                }
-            );
-
-            navigate("/success", { replace: true });
+            await addDoc(ref, {
+                type: time,
+                fullDate: moment().format("MMMM D, YYYY"),
+                user: doc(db, "users", id),
+                time: serverTimestamp(),
+                day: day,
+                month: moment().format("MMM"),
+                year: moment().format("YYYY"),
+            });
+            // navigate("/success", { replace: true });
         } catch (error) {
+            setLoading(false);
+
             console.log(error);
             alert(error);
         }
