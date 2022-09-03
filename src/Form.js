@@ -60,7 +60,7 @@ const Form = () => {
                 month: moment().format("MMM"),
                 year: moment().format("YYYY"),
             });
-            // navigate("/success", { replace: true });
+            navigate("/success", { replace: true });
         } catch (error) {
             setLoading(false);
 
