@@ -1,46 +1,68 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,regular,500,600,700,800,300italic,italic,500italic,600italic,700italic,800italic);
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-weight: bold;
+    font-family: Nunito;
+}
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+body {
+    background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 form {
-    background-color: whitesmoke;
+    width: 90%;
 
-    margin: 12% auto;
-    padding: 10px;
-    width: 20%;
+    background: rgba(255, 255, 255, 0.2);
+    /* margin: auto auto; */
+    padding: 20px;
     text-transform: capitalize;
-    font-weight: bold;
-    font-family: Open Sans;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+.success {
+    width: 100%;
+    height: 100%;
+}
+.success img {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 form > div {
+    transition: all 1s;
     margin: 10px 0;
 }
 select {
-    border: 1px solid rgba(128, 128, 128, 0.336);
-    background-color: white;
+    border: transparent;
+    background-color: rgb(255, 255, 255);
     text-transform: capitalize;
     height: 28px;
 }
 option {
-    font-family: Open Sans;
+    font-family: Nunito;
 }
-
 input {
-    border: 1px solid rgba(128, 128, 128, 0.336);
+    border: transparent;
     height: 28px;
+    outline: none;
 }
 button {
-    font-weight: bold;
-    font-family: Open Sans;
     font-size: 16px;
     border: none;
     padding: 5px;
     text-transform: capitalize;
-    background-color: rgba(0, 128, 0, 0.527);
     color: white;
+    background: green;
 }
 input,
 select,
@@ -50,7 +72,7 @@ button {
     width: 100%;
     border-radius: 5px;
 }
-.image-container {
+.img {
     width: 100%;
     height: 100%;
 }
@@ -62,13 +84,35 @@ h1 {
     text-transform: capitalize;
     font-size: 5rem;
 }
+.id {
+    position: relative;
+}
+.error {
+    transition: opacity 1s ease-in-out;
+    background-color: brown;
+    color: white;
+    text-align: center;
+}
+
+.error p {
+    margin-left: 10px;
+}
+
+.remove {
+    opacity: 0;
+}
+.add {
+    opacity: 1;
+    padding: 5px;
+}
+
 @media only screen and (max-width: 640px) {
     form {
-        width: 50%;
+        width: 75%;
     }
 }
 @media only screen and (min-width: 640px) {
     form {
-        width: 22%;
+        width: 90%;
     }
 }
