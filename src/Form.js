@@ -22,7 +22,7 @@ const Form = () => {
     const [time, settime] = useState("login");
     const [loading, setLoading] = useState(false);
     const handleSubmit = async (event) => {
-        let day = moment().format("MMMM D, YYYY");
+        let day = moment().format("dddd");
 
         event.preventDefault();
         let user = [];
@@ -80,7 +80,7 @@ const Form = () => {
                 month: moment().format("MMM"),
                 year: moment().format("YYYY"),
             });
-            navigate("/success", { replace: true });
+            // navigate("/success", { replace: true });
         } catch (error) {
             setLoading(false);
             seterror("please check your network");
