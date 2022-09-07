@@ -23,6 +23,7 @@ const Form = () => {
     const [loading, setLoading] = useState(false);
     const handleSubmit = async (event) => {
         let day = moment().format("dddd");
+        let fullDate = moment().format("LL");
 
         event.preventDefault();
         let user = [];
@@ -33,7 +34,7 @@ const Form = () => {
         const ref = collection(db, "logins");
         const q = query(
             ref,
-            where("fullDate", "==", day),
+            where("fullDate", "==", fullDate),
             where("user", "==", doc(db, "users", id)),
             where("type", "==", time)
         );
