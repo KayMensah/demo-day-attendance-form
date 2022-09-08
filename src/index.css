@@ -5,13 +5,18 @@
     font-weight: bold;
     font-family: Nunito;
 }
-
+html,
+body,
+section {
+    width: 100%;
+}
 body {
     background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
     background-repeat: no-repeat;
     background-size: cover;
 }
 section {
+    overflow: hidden;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -116,6 +121,6 @@ h1 {
 }
 @media only screen and (min-width: 640px) {
     form {
-        width: 90%;
+        width: 20%;
     }
 }
