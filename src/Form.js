@@ -109,7 +109,9 @@ const Form = () => {
                         <input
                             type="text"
                             value={id}
-                            onChange={(event) => setId(event.target.value)}
+                            onChange={(event) =>
+                                setId(event.target.value.toUpperCase())
+                            }
                         />
                     </label>
                 </div>
