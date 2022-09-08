@@ -5,16 +5,16 @@
     font-weight: bold;
     font-family: Nunito;
 }
-html,
-body {
-    height: 100%;
-    width: 100%;
-}
+
 body {
     background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
     background-repeat: no-repeat;
     background-size: cover;
+}
+section {
+    height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 }
@@ -105,7 +105,10 @@ h1 {
     opacity: 1;
     padding: 5px;
 }
-
+.toast {
+    background-color: brown;
+    color: white;
+}
 @media only screen and (max-width: 640px) {
     form {
         width: 75%;

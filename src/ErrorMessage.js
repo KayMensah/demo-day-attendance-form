@@ -1,12 +1,8 @@
 import React from "react";
+import toast, { Toaster } from "react-hot-toast";
+
 const ErrorMessage = ({ message }) => {
-    return (
-        <div className={`${!message ? "remove" : "add"} error`}>
-            <section>
-                <p>{message}</p>
-            </section>
-        </div>
-    );
+    return toast.error(`${message}`);
 };
 
 export default ErrorMessage;

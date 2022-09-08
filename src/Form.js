@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
     addDoc,
     collection,
@@ -11,16 +11,23 @@ import {
 } from "firebase/firestore";
 import { db } from "./Firebase";
 import { Circle } from "better-react-spinkit";
-import { useNavigate } from "react-router-dom";
 import moment from "moment";
-import ErrorMessage from "./ErrorMessage";
+import toast, { Toaster } from "react-hot-toast";
 
 const Form = () => {
-    let navigate = useNavigate();
-    const [error, seterror] = useState("");
     const [id, setId] = useState("");
     const [time, settime] = useState("login");
     const [loading, setLoading] = useState(false);
+    const notify = (error, theme) =>
+        toast[theme](error, {
+            duration: 4000,
+            position: "top-center",
+            // iconTheme: {
+            //     primary: "#000",
+            //     secondary: "#fff",
+            // },
+        });
+
     const handleSubmit = async (event) => {
         let day = moment().format("dddd");
         let fullDate = moment().format("LL");
@@ -28,8 +35,7 @@ const Form = () => {
         event.preventDefault();
         let user = [];
         if (!id) {
-            seterror("Please Enter Your ID");
-            return;
+            return notify("Please Enter Your ID", "error");
         }
         const ref = collection(db, "logins");
         const q = query(
@@ -45,13 +51,13 @@ const Form = () => {
 
             if (!docSnap.exists()) {
                 setLoading(false);
-                seterror("No Such User");
-                return;
+
+                return notify("No Such User", "error");
             }
         } catch (error) {
             console.log(error.message);
             setLoading(false);
-            seterror("please check your network");
+            notify("please check your network", "error");
         }
 
         try {
@@ -60,15 +66,14 @@ const Form = () => {
                 user.push(doc.data());
             });
             if (user.length !== 0) {
-                seterror(`Already ${time}!!`);
                 setLoading(false);
 
-                return;
+                return notify(`Already ${time}!!`, "error");
             }
         } catch (error) {
             console.log(error.message);
             setLoading(false);
-            seterror("please check your network");
+            notify("please check your network", "error");
         }
 
         try {
@@ -81,37 +86,22 @@ const Form = () => {
                 month: moment().format("MMM"),
                 year: moment().format("YYYY"),
             });
-            // navigate("/success", { replace: true });
+
+            notify(`successfully ${time}`, "success");
+            setId("");
+            setLoading(false);
         } catch (error) {
             setLoading(false);
-            seterror("please check your network");
+            notify("please check your network", "error");
 
             console.log(error);
-            alert(error);
         }
-        setId("");
-
-        setLoading(false);
     };
-
-    useEffect(() => {
-        if (error) {
-            setTimeout(() => {
-                seterror("");
-            }, 5000);
-        }
-    }, [error]);
 
     return (
         <section>
-            {/* <img
-                src="https://d39kqat1wpn1o5.cloudfront.net/app/uploads/2019/05/benefits.png"
-                alt=""
-            /> */}
-
+            <Toaster />
             <form onSubmit={handleSubmit}>
-                <ErrorMessage message={error} />
-
                 <div>
                     <label>
                         {" "}
