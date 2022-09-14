@@ -101,7 +101,7 @@ const Form = () => {
     return (
         <section>
             <Toaster />
-            <form onSubmit={handleSubmit} className="h-screen">
+            <form onSubmit={handleSubmit}>
                 <div>
                     <label>
                         {" "}
