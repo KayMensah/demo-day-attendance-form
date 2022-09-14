@@ -16,8 +16,6 @@ body {
     background-size: cover;
 }
 section {
-    overflow: hidden;
-    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -91,12 +89,6 @@ h1 {
 }
 .id {
     position: relative;
-}
-.error {
-    transition: opacity 1s ease-in-out;
-    background-color: brown;
-    color: white;
-    text-align: center;
 }
 
 .error p {

@@ -99,7 +99,7 @@ const Form = () => {
     };
 
     return (
-        <section>
+        <section className="h-screen">
             <Toaster />
             <form onSubmit={handleSubmit}>
                 <div>
