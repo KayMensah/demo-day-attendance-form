@@ -99,9 +99,9 @@ const Form = () => {
     };
 
     return (
-        <section className="h-screen">
+        <section>
             <Toaster />
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="h-screen">
                 <div>
                     <label>
                         {" "}
