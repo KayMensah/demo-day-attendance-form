@@ -35,10 +35,17 @@ const Form = () => {
     const handleSubmit = async (event) => {
         let day = moment().format("dddd");
         let fullDate = moment().format("LL");
-
+        console.log(day);
         event.preventDefault();
+        if (day == "Sunday") {
+            return notify(
+                "Work on sunday are considered overtime!!",
+                "error",
+                {}
+            );
+        }
         if (!id) {
-            return notify("Please Enter Your ID", "error");
+            return notify("Please Enter Your ID", "error", {});
         }
         const ref = collection(db, "logins");
         const q = query(
