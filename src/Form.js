@@ -29,14 +29,14 @@ const Form = () => {
             draggable: true,
             progress: undefined,
             closeButton: false,
-            icon: "😒",
         });
 
     const handleSubmit = async (event) => {
+        event.preventDefault();
+        setLoading(true);
+
         let day = moment().format("dddd");
         let fullDate = moment().format("LL");
-        console.log(day);
-        event.preventDefault();
         if (day == "Sunday") {
             return notify(
                 "Work on sunday are considered overtime!!",
@@ -45,7 +45,7 @@ const Form = () => {
             );
         }
         if (!id) {
-            return notify("Please Enter Your ID", "error", {});
+            return notify("Please Enter Your ID 😒", "error", {});
         }
         const ref = collection(db, "logins");
         const q = query(
@@ -54,27 +54,35 @@ const Form = () => {
             where("user", "==", doc(db, "users", id)),
             where("type", "==", time)
         );
-        const docSnap = await getDoc(doc(db, "users", id));
-        setLoading(true);
+        try {
+            const docSnap = await getDoc(doc(db, "users", id));
 
-        if (!docSnap.exists()) {
+            if (!docSnap.exists()) {
+                setLoading(false);
+                return notify("No Such User 😒", "error");
+            }
+        } catch (error) {
             setLoading(false);
-
-            notify("No Such User", "error");
-            return;
+            console.log(error);
         }
+
         let user = [];
 
-        const isAlready = await getDocs(q);
-        isAlready.forEach((doc) => {
-            user.push(doc.data());
-        });
-        if (user.length !== 0) {
+        try {
+            const isAlready = await getDocs(q);
+            isAlready.forEach((doc) => {
+                user.push(doc.data());
+            });
+            if (user.length > 0) {
+                setLoading(false);
+                return notify(`User Already ${time} 😒`, "error");
+            }
+        } catch (error) {
             setLoading(false);
-            notify(`user Already ${time}`, "error");
 
-            return;
+            console.log(error);
         }
+
         await add(ref, time, id, day, notify, setId, setLoading);
     };
 
